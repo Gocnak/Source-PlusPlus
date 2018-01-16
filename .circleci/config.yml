@@ -9,8 +9,8 @@ jobs:
       - checkout
       
       - run:
-        name: Installing build tools
-        command: sudo apt-get install build-essential gcc-multilib g++-multilib
+          name: Installing build tools
+          command: sudo apt-get install build-essential gcc-multilib g++-multilib
 
       - run:
           name: Create game project files
@@ -37,27 +37,27 @@ jobs:
     working_directory: ~/mom_build
 
     steps:
-        - checkout
+      - checkout
 
         # Create the game project stuff
-        - run:
-            name: Create game project files
-            command: |
-              cd game/mp/src
-              ./creategameprojects
+      - run:
+          name: Create game project files
+          command: |
+            cd game/mp/src
+            ./creategameprojects
 
         # Run the XCode build
-        - run: 
-            name: Building the game
-            command: xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig
+      - run: 
+          name: Building the game
+          command: xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig
 
-        - store_artifacts:
-            path: game/mp/game/bin
-            destination: bin_mac
+      - store_artifacts:
+          path: game/mp/game/bin
+          destination: bin_mac
 
-        - store_artifacts:
-            path: game/mp/game/momentum/bin
-            destination: game_bin_mac
+      - store_artifacts:
+          path: game/mp/game/momentum/bin
+          destination: game_bin_mac
 
 workflows:
   version: 2
