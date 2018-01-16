@@ -13,14 +13,14 @@ jobs:
       - run:
           name: Create game project files
           command: |
-            cd ~/mom_build/game/mp/src
+            cd ~/mom_build/Source-PlusPlus/src
             ./creategameprojects
 
         # Run the XCode build
       - run: 
           name: Building the game
           command: |
-            cd ~/mom_build/game/mp/src
+            cd ~/mom_build/Source-PlusPlus/src
             xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig
 
       - store_artifacts:
