@@ -13,20 +13,22 @@ jobs:
       - run:
           name: Create game project files
           command: |
-            cd game/mp/src
+            cd ~/mom_build/game/mp/src
             ./creategameprojects
 
         # Run the XCode build
       - run: 
           name: Building the game
-          command: xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig
+          command: |
+            cd ~/mom_build/game/mp/src
+            xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig
 
       - store_artifacts:
-          path: game/mp/game/bin
+          path: ~/mom_build/game/mp/game/bin
           destination: bin_mac
 
       - store_artifacts:
-          path: game/mp/game/momentum/bin
+          path: ~/mom_build/game/mp/game/momentum/bin
           destination: game_bin_mac
 
 workflows:
