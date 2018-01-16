@@ -13,6 +13,7 @@ jobs:
       - run:
           name: Create game project files
           command: |
+            ls -l
             cd ~/mom_build/Source-PlusPlus/src
             ./creategameprojects
 
