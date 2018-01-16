@@ -1,0 +1,29 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty # build-essential is on here
+      sudo: required # for the steam runtime
+    - os: osx
+      osx_image: xcode7.2 # already include Command Line Tools
+
+compiler:
+  - gcc
+
+# Only build master and pull requests
+branches:
+  only:
+    - master
+    - /^pr\..*/
+
+# Create the project files
+before_script:
+  - cd mp/src
+  - ./creategameprojects
+
+# Build the project
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make -f games.mak; fi
+
