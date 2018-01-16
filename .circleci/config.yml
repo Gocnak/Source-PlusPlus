@@ -8,9 +8,9 @@ jobs:
     steps:
       - checkout
       
-      - run:
-          name: Installing build tools
-          command: sudo apt-get install build-essential gcc-multilib g++-multilib
+#      - run:
+#          name: Installing build tools
+#          command: sudo apt-get install build-essential gcc-multilib g++-multilib
 
       - run:
           name: Create game project files
@@ -64,4 +64,4 @@ workflows:
   build_game:
     jobs:
       - build_mac
-      - build_linux
+#      - build_linux
