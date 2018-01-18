@@ -46,5 +46,5 @@ script:
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-       make -f games.mak
+       make -sf games.mak
     fi
