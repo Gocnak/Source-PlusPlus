@@ -21,8 +21,8 @@ before_script:
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
        docker pull gocnak/sourcesdk_steamrt_image
        docker run -it -d --name build_sdk gocnak/sourcesdk_steamrt_image
-       docker exec build_sdk cd ~ && git clone https://github.com/momentum-mod/game.git
-       docker exec build_sdk cd game/mp/src && ./creategameprojects
+       docker exec build_sdk git clone https://github.com/momentum-mod/game.git ~/
+       docker exec build_sdk ~/game/mp/src/creategameprojects
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
@@ -37,5 +37,5 @@ script:
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-       docker exec build_sdk make -f games.mak
+       docker exec build_sdk make -f ~/game/mp/src/games.mak
     fi
