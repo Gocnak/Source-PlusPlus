@@ -3,32 +3,39 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: trusty # build-essential is on here
-      sudo: required # for the steam runtime
-      addons:
-        apt:
-          packages:
-            - g++-multilib
-            - gcc-multilib
+      services:
+        - docker
+#      compiler:
+#         - gcc
+#      addons:
+#        apt:
+#          packages:
+#            - g++-multilib
+#            - gcc-multilib
     - os: osx
-      osx_image: xcode7.2 # already include Command Line Tools
-
-compiler:
-  - gcc
-
-# Only build master and pull requests
-branches:
-  only:
-    - master
-    - /^pr\..*/
+      osx_image: xcode8.3 # already include Command Line Tools
 
 # Create the project files
 before_script:
-  - cd mp/src
-  - ./creategameprojects
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+       docker pull gocnak/sourcesdk_steamrt_image
+       docker run -it -d --name build_sdk gocnak/sourcesdk_steamrt_image
+       docker exec build_sdk cd ~ && git clone https://github.com/momentum-mod/game.git
+       docker exec build_sdk cd game/mp/src && ./creategameprojects
+    fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+       cd src && ./creategameprojects
+    fi
 
 # Build the project
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make -f games.mak; fi
-
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
+       xcodebuild -quiet -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig -configuration Release 
+    fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+       docker exec build_sdk make -f games.mak
+    fi
