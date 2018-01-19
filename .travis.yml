@@ -18,7 +18,9 @@ matrix:
 before_script:
     # Setting up the Steam Runtime on Linux
   - |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        export CC=
+        export CXX=
         cd /
         sudo mkdir valve
         cd /valve
