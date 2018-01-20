@@ -46,8 +46,8 @@ script:
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-       export CXX=clang++
-       export CC=clang
-       sudo make -s -f games.mak CC=clang CXX=clang++
+       export CXX=/valve/steam-runtime/bin/g++
+       export CC=/valve/steam-runtime/bin/gcc
+       sudo make -s -f games.mak CC=/valve/steam-runtime/bin/gxx CXX=/valve/steam-runtime/bin/g++
     fi
 
