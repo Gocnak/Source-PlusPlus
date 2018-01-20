@@ -46,8 +46,8 @@ script:
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-       export CXX=g++-4.8
-       export CC=gcc-4.8
-       sudo make -s -f games.mak
+       export CXX=clang++
+       export CC=clang
+       sudo make -s -f games.mak CC=clang CXX=clang++
     fi
 
