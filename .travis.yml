@@ -42,7 +42,7 @@ before_script:
 script:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
-       xcodebuild -quiet -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig -configuration Release 
+       travis_wait 30 xcodebuild -quiet -project games.xcodeproj -arch i386 -xcconfig devtools/release.xcconfig -configuration Release 
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
