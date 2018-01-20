@@ -4,8 +4,6 @@ matrix:
   include:
     - os: linux
       sudo: required
-      compiler:
-         - clang
       addons:
         apt:
           packages:
@@ -19,6 +17,8 @@ before_script:
     # Setting up the Steam Runtime on Linux
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        export CC=
+        export CXX=
         cd /
         sudo mkdir valve
         cd /valve
@@ -46,6 +46,8 @@ script:
     fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+       export CXX=
+       export CC=
        sudo make -s -f games.mak
     fi
 
